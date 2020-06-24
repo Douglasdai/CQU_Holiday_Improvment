@@ -258,6 +258,325 @@
 # vec = [[x,x**2] for x in vec]
 # print(vec)
 
-freshfruit = ['  banana', '  loganberry ', 'passion fruit  ']
-freshfruit = [weapon.strip() for weapon in freshfruit]
-print(freshfruit)
+# freshfruit = ['  banana', '  loganberry ', 'passion fruit  ']
+# freshfruit = [weapon.strip() for weapon in freshfruit]
+# print(freshfruit)
+# vec = [3*x for x in vec if x>3]
+# print(vec)
+# vec = [3*x for x in vec if x<2]
+# print(vec)
+# vec1 = [2,4,6]
+# vec2 = [4,3,-9]
+# vec1 = [x*y for x in vec1 for y in vec2]
+# vec1 = [x+y for x in vec1 for y in vec2]
+# vec1 = [vec1[i]*vec2[i] for i in range(len(vec1))]
+# print(vec1)
+
+#嵌套
+# [str(round(355/113),i)for i in range(1,6)]
+
+#断言 assert
+#矩阵转置
+# matrix = [[1, 2, 3, 4],[5, 6, 7, 8],[9, 10, 11, 12],]
+# matrix = [[row[i] for row in matrix] for i in range(4)]
+# print(matrix)
+
+
+#del 语句
+#for 表达式
+
+#上课内容
+# max =2 
+# num =0
+# for max in range(1,max+1):
+#     num+=max
+#     print(num)
+# for i in range(0,5):
+#     j =0 
+#     while j <4 :
+#         print('i is %d,and j is %d'%(i,j))
+#         j+=1
+
+#遍历技巧
+# knights = {'gallahad': 'the pure', 'robin': 'the brave'}
+# for k, v in knights.items():
+#     print(k,v)
+
+# for i,v in enumerate(['tic','tac','toe']):
+#     print(i,v)
+
+# questions = ['name','quest','favorite color']
+# answers = ['lancelot','the holy grail','blue']
+# for q,a in zip(questions,answers):
+#     print('what is your {0}? it is {1}'.format(q,a))
+
+# #反向遍历
+# for i in reversed(range(1,10,2)):
+#     print(i)
+
+# #顺序遍历
+# basket = ['apple','orange','apple','pear','orange','banana']
+# for f in sorted(set(basket)):#转到集合意思为删除重复元素
+#     print(f)
+
+#模块
+# import sys
+# print('命令行参数如下：')
+# for i in sys.argv:
+#     print(i)
+
+# print('\n\nPython path is :',sys.path,'\n')
+#fibo 模块的内容
+# def fib(n):
+#     a,b=0,1
+#     while b<n:
+#         a,b=b,a+b
+#         print(b)
+
+# def fib1(n):
+#     a,b=0,1
+#     result = []
+#     while b <n:
+#         result.append(b)
+#         a,b=b,a+b
+#     return result
+
+# import fibo
+# fibo.fib(1000)
+# c = fibo.fib1(1000)
+# print(c)
+
+# if __name__=='__mian__':
+#     print('progress is running ')
+# else:
+#     print('I am from another ')
+# import sys
+# print(dir(sys))
+# print(repr(1/7))
+# for x in range(1,11):
+#     print(repr(x).rjust(2),repr(x*x).rjust(3),end=' ')
+#     print(repr(x*x*x).rjust(4))
+
+# for x in range(1,11):
+#     print('{0:2d}{1:4d}{2:5d}'.format(x,x*x,x*x*x))
+
+# print('{0} 和 {1}'.format('Google', 'Runoob'))
+# print('{1} 和 {0}'.format('Google', 'Runoob'))
+# print('{name}网址： {site}'.format(name='菜鸟教程', site='www.runoob.com'))
+
+# import math 
+# print('常量PI的值为:{}。'.format(math.pi))
+
+# print('常量PI的值为:{!a}。'.format(math.pi))
+# import math 
+# table = {'Google':1,'Runoob':2,'Taobao':3}
+# for name,number in table.items():
+#     print('{0:10} ==> {1:10d}'.format(name,number))
+
+# import math
+# print('pi is %5.3f'%math.pi)
+# f = open("/tmp/foo.txt", "w")
+
+# f.write( "Python 是一个非常好的语言。\n是的，的确非常好!!\n" )
+
+# # 关闭打开的文件
+# f.close()
+# import pickle
+# data1 = {'a': [1, 2.0, 3, 4+6j],
+#          'b': ('string', u'Unicode string'),
+#          'c': None}
+
+# selfref_list = [1, 2, 3]
+# selfref_list.append(selfref_list)
+
+# output = open('data.pkl', 'wb')
+# # Pickle dictionary using protocol 0.
+# pickle.dump(data1, output)
+
+# # Pickle the list using the highest protocol available.
+# pickle.dump(selfref_list, output, -1)
+# output.close()
+
+#错误与异常
+# def divide(x, y):
+#         try:
+#             result = x / y
+#         except ZeroDivisionError:
+#             print("division by zero!")
+#         else:
+#             print("result is", result)
+#         finally:
+#             print("executing finally clause")
+# divide(2,1)
+# divide(2,0)
+# divide('2','1')
+
+#python 面向对象
+# class myclass:
+#     i =12345
+#     def f(self):
+#         return 'hello world'
+
+# x=myclass()
+# print('myclass  i is : ',x.i)
+# print('myclass f is :',x.f())
+
+#类方法
+# class people:
+#     name = ' '
+#     age =0
+#     __weight = 0
+#     def __init__(self,n,a,w):
+#         self.name = n
+#         self.age =a
+#         self.__weight= w
+#     def speak(self):
+#         print('%s say that : i am %d yeas old' %(self.name,self.age))
+
+# class student(people):
+#     grade = ' '
+#     def __init__(self,n,a,w,g):
+#         people.__init__(self,n,a,w)
+#         self.grade = g
+#     def speak(self):
+#         print('%s say that : i am %d yeas old and grade %d' %(self.name,self.age,self.grade))
+
+# s= student('xiaoming ',10,50,4)
+# s.speak()
+
+
+# 多继承
+# class people:
+#     #定义基本属性
+#     name = ''
+#     age = 0
+#     #定义私有属性,私有属性在类外部无法直接进行访问
+#     __weight = 0
+#     #定义构造方法
+#     def __init__(self,n,a,w):
+#         self.name = n
+#         self.age = a
+#         self.__weight = w
+#     def speak(self):
+#         print("%s 说: 我 %d 岁。" %(self.name,self.age))
+ 
+# #单继承示例
+# class student(people):
+#     grade = ''
+#     def __init__(self,n,a,w,g):
+#         #调用父类的构函
+#         people.__init__(self,n,a,w)
+#         self.grade = g
+#     #覆写父类的方法
+#     def speak(self):
+#         print("%s 说: 我 %d 岁了，我在读 %d 年级"%(self.name,self.age,self.grade))
+ 
+# #另一个类，多重继承之前的准备
+# class speaker():
+#     topic = ''
+#     name = ''
+#     def __init__(self,n,t):
+#         self.name = n
+#         self.topic = t
+#     def speak(self):
+#         print("我叫 %s，我是一个演说家，我演讲的主题是 %s"%(self.name,self.topic))
+ 
+# #多重继承
+# class sample(speaker,student):
+#     a =''
+#     def __init__(self,n,a,w,g,t):
+#         student.__init__(self,n,a,w,g)
+#         speaker.__init__(self,n,t)
+ 
+# test = sample("Tim",25,80,4,"Python")
+# test.speak()   #方法名同，默认调用的是在括号中排前地父类的方法
+
+#私有变量
+# class JustCounter:
+#     __secretCount = 0  # 私有变量
+#     publicCount = 0    # 公开变量
+ 
+#     def count(self):
+#         self.__secretCount += 1
+#         self.publicCount += 1
+#         print (self.__secretCount)
+ 
+# counter = JustCounter()
+# counter.count()
+# counter.count()
+# print (counter.publicCount)
+# from dataclasses import dataclass
+# class Vector:
+#     def __init__(self,a,b):
+#         self.a = a
+#         self.b = b
+#     def __str__(self):
+    
+#         return 'Vector (%d,%d)'%(self.a,self.b)
+    
+#     def __add__(self,other):
+#         return Vector(self.a+other.a,self.b+other.b)
+# c = Vector(9,10)
+# d = Vector(-1,2)
+# print(c+d)
+
+#作用域
+#L –> E –> G –>gt
+
+#global 和 nonlocal关键字
+#全局变量
+# num =1 
+# def fun1():
+#     global num
+#     print(num)
+#     num =123
+#     print(num)
+
+# fun1()
+# print(num)
+#nonlocal
+# def outer():
+#     num =10 
+#     def inner():
+#         nonlocal num
+#         num =100 
+#         print(num)
+#     inner()
+#     print(num)
+# outer()
+
+# a = 10
+# def test(a):
+#     a +=1
+#     print(a)
+# test(a)
+
+# import random
+# print(random.choice(['apple', 'pear', 'banana']))
+
+
+#测试模块  目前不不知道是干啥得
+
+
+#实例 字符串是否为数字
+# def is_number(s):
+#     try:
+#         float(s)
+#         return True
+#     except ValueError:
+#         pass
+#     try:
+#        import unicodedata
+#        unicodedata.numeric(s)
+#        return True
+#     except (TypeError,ValueError):
+#         pass
+#     return False
+
+# print(is_number('foo'))
+
+
+#python 金字塔
+# num=int(input())
+# for i in range(1,num+1):
+#     print(' '*(num-i)+'+'*(2*i-1))
