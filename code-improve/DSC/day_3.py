@@ -572,7 +572,6 @@
 #     except (TypeError,ValueError):
 #         pass
 #     return False
-
 # print(is_number('foo'))
 
 
@@ -580,3 +579,8 @@
 # num=int(input())
 # for i in range(1,num+1):
 #     print(' '*(num-i)+'+'*(2*i-1))
+# import urllib.parse
+# import urllib.request
+# data = bytes(urllib.parse.urlencode({'word': 'hello'}), encoding='utf8')
+# response = urllib.request.urlopen('http://httpbin.org/post', data=data)
+# print(response.read())
