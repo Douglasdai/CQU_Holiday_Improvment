@@ -65,3 +65,57 @@
 #     if flag=='Y' or flag=='y':
 #         webbrowser.open("http://www.weather.com.cn/forecast/ct.shtml?areaid="+address)
 # print("数据来源：中央气象台")
+
+
+
+import requests
+from bs4 import BeautifulSoup
+
+#浏览器代理
+headers = {
+    "user-agent": "Mozilla/5.0(Windows NT 10.0;WOW64)\
+    AppleWebKit/537.6(KHTML,like Gecko)\
+    Chrome/78.0.3904.87 Safari/537.36"
+}
+
+#获取源码
+def get_url(url):
+    data = requests.get(url,headers =headers).content.decode("utf-8")
+    #使用html5lib 容错率较高
+    soup = BeautifulSoup(data,"html5lib")
+    return soup
+
+#通过网页源码匹配该地区的七天天气的html源码
+def gain_data(soup):
+    hanmls = soup.find("div",class_="hanml")
+    #匹配到存放所有天数温度的div标签下的数据
+    conmidtabs = hanmls.find_all("div",class_="conmidtabs")
+    return conmidtabs
+
+#通过网页源码匹配是哪七天
+def get_day():
+    url:"http://www.weather.com.cn/textFC/hb.shtml"
+    soup = get_url(url)
+    day =[]
+    days = list(soup.find("ul",calss_="day_tabs").stripped_strings)
+    for Current in days:
+        day.append(Current)
+        return day
+
+#获取每天数据
+def gain_table(conmidtabs):
+    tabs = conmidtabs.find_all("table")
+    #用来存放遍历的数据
+    y={}
+    #遍历当天该地区的所有城市
+    for tab in tabs:
+        #前两个表头，第三个获取每个省的城市名字和温度
+        trs = tab.find_all("tr")[2:] 
+    for tr in trs:
+        #提取城市name
+        citys = list(tr.find("td",width ="83").stripped_strings)[0]
+        #提取城市min_temparetrue
+        tmps = list(tr.fing("td",width = "86").stripped_strings)[0]
+        #把城市名作为key，温度作为value
+        y[citys]= in (tmps)
+        
