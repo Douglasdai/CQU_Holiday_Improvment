@@ -16,14 +16,25 @@
 # print(response.read())
 
 #爬取某城市几天的 天气情况
-# from bs4 import BeautifulSoup
-# from bs4 import UnicodeDammit  # BS 内置库，猜测文档编码
-# import urllib.request
+from bs4 import BeautifulSoup
+from bs4 import UnicodeDammit  # BS 内置库，猜测文档编码
+import urllib.request
 
-# url = 'http://www.weather.com.cn/weather/101040100.shtml'
+input_file = open("D:\\city.txt","r",encoding= "utf-8")
+infile_content =input_file.readlines()
+    #定义空列表储存临时数据，将同一组数据存储在同一列表中
+list_temp = []
+for each in infile_content:
+    list_temp.append(each.split())
+    # print(list_temp)
+    #print(len(list_temp))
+print(list_temp)
+# print(len(dict_temp))
+input_file.close()
 
+# url = 'http://www.weather.com.cn/weather/101010100.shtml'
 # try:
-#     headers = {'User-Agent':'Mozilla/5.0(Windows;U;Windows NT 6.0 x64;en-US;rv:1.9pre)Gecko/20191008 Minefield/3.0.2pre'}
+#     headers = {'User-Agent':'Mozilla/5.0(Windows;U;Windows NT 6.0 x64;en-US;rv:1.9pre)Gecko/20191008 Minefield/3.0.2pre'}  
 #     req = urllib.request.Request(url,headers = headers)
 #     data = urllib.request.urlopen(req)
 #     data = data.read()
@@ -31,89 +42,115 @@
 #     data = dammint.unicode_markup
 #     soup = BeautifulSoup(data,'lxml')
 #     lis = soup.select("ul[class='t clearfix'] li") # 找到ul下的所有li
+#     fp = open ("D:\CQU_work_hard\CQU_Holiday_Improvment\code-improve\DSC\exz.txt", "a", encoding="utf-8")
 #     for li in lis:
 #         try:
 #             data = li.select('h1')[0].text  # h1的第一个元素的text文本
 #             weather = li.select("p[class='wea']")[0].text
 #             temp = li.findAll('span')[0].text + '/' + li.findAll('i')[0].text
 #             print(data,weather,temp)
+#             fp.write(data)
+#             fp.write(weather)
+#             fp.write(temp)
+#             fp.write('\n')
 #         except Exception as err:
-#             print(err)
+#                 print(err)
 # except Exception as err:
 #     print(err)
+# fp.close()
+
+
+#输入数据函数
+# def input_dict(infile):
+#     input_file = open(infile,"r",encoding= "utf-8")
+#     infile_content  =input_file.readlines()
+#     #定义空列表储存临时数据，将同一组数据存储在同一列表中
+#     list_temp = []
+#     for each in infile_content:
+#         list_temp.append(each.split())
+#         # print(list_temp)
+#         #print(len(list_temp))
+#     dict_temp = dict(list_temp)
+#     # print(dict_temp)
+#     # print(len(dict_temp))
+#     input_file.close()
+
+# if __name__ == "__main__":
+#     input_dict("D:\\city.txt")
+
 
 #目前不知道怎么 进行数据库的处理
 #爬取几个城市的天气情况
 # from bs4 import BeautifulSoup
 # from bs4 import UnicodeDammit
 # import urllib.request
-# import sqlite3
+import sqlite3
 
-# class WeatherDB:  # 包含对数据库的操作
-#     def openDB(self):
-#         self.con = sqlite3.connect('weathers.db')
-#         self.cursor = self.con.cursor()
-#         try:
-#             self.cursor.execute('create table weathers (wCity varchar(16),wDate varchar(16),wWeather varchar(64),wTemp varchar(32),constraint pk_weather primary key(wCity,wDate))')
-#             # 爬取城市的天气预报数据储存到数据库weather.db中
-#         except:  # 第一次创建表格是成功的；第二次创建就会清空表格
-#             self.cursor.execute('delete from weathers')
-#     def closeDB(self):
-#         self.con.commit()
-#         self.con.close()
+class WeatherDB:  # 包含对数据库的操作
+    def openDB(self):
+        self.con = sqlite3.connect('weathers.db')
+        self.cursor = self.con.cursor()
+        try:
+            self.cursor.execute('create table weathers (wCity varchar(16),wDate varchar(16),wWeather varchar(64),wTemp varchar(32),constraint pk_weather primary key(wCity,wDate))')
+            # 爬取城市的天气预报数据储存到数据库weather.db中
+        except:  # 第一次创建表格是成功的；第二次创建就会清空表格
+            self.cursor.execute('delete from weathers')
+    def closeDB(self):
+        self.con.commit()
+        self.con.close()
 
-#     def insert(self,city,date,weather,temp):
-#         try:
-#             self.cursor.execute('insert into weather (wCity,wDate,wTemp)values(?,?,?,?)',(city,date,weather,temp))
-#         except Exception as err:
-#             print(err)
-#     def show(self):
-#         self.cursor.execute('select * from weathers')
-#         rows = self.cursor.fetchall()
-#         print('%-16s%-16s%-32s%-16s'%('city','date','weather','temp'))
-#         for row in rows:
-#             print('%-16s%-16s%-32s%-16s'%(row[0],row[1],row[2],row[3]))
+    def insert(self,city,date,weather,temp):
+        try:
+            self.cursor.execute('insert into weather (wCity,wDate,wTemp)values(?,?,?,?)',(city,date,weather,temp))
+        except Exception as err:
+            print(err)
+    def show(self):
+        self.cursor.execute('select * from weathers')
+        rows = self.cursor.fetchall()
+        print('%-16s%-16s%-32s%-16s'%('city','date','weather','temp'))
+        for row in rows:
+            print('%-16s%-16s%-32s%-16s'%(row[0],row[1],row[2],row[3]))
 
-# class WeatherForecast:  # 调用url,request函数访问网站
-#     def __init__(self):
-#         self.headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.0 x64; en-US;rv:1.9pre)Gecko/2019100821 Minefield/3.0.2pre'}  # 创建头，伪装成服务器/浏览器访问远程的web服务器
-#         self.cityCode = {'北京':'101010100','上海':'101020100','广州':'101280101','深圳':'101280601','新竹':'101340103'} # 查找的城市
-#     def forecastCity(self,city):
-#         if city not in self.cityCode.keys():
-#             print(city+'code cannot be found')
-#             return
+class WeatherForecast:  # 调用url,request函数访问网站
+    def __init__(self):
+        self.headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.0 x64; en-US;rv:1.9pre)Gecko/2019100821 Minefield/3.0.2pre'}  # 创建头，伪装成服务器/浏览器访问远程的web服务器
+        self.cityCode = {'北京':'101010100','上海':'101020100','广州':'101280101','深圳':'101280601','新竹':'101340103'} # 查找的城市
+    def forecastCity(self,city):
+        if city not in self.cityCode.keys():
+            print(city+'code cannot be found')
+            return
 
-#         url = 'http://www.weather.com.cn/weather/'+self.cityCode[city]+'.shtml'  # 创建成url
-#         try:
-#             req = urllib.request.Request(url,headers=self.headers) # 访问地址
-#             data = urllib.request.urlopen(req)
-#             data = data.read()
-#             dammit = UnicodeDammit(data,['utf-8'],'gbk')
-#             data = dammit.unicode_markup
-#             soup = BeautifulSoup(data,'lxml')
-#             lis = soup.select("ul[class='t clearfix'] li")  # 找到每一个天气数据
-#             for li in lis:
-#                 try:
-#                     date = li.select('h1')[0].text
-#                     weather = li.select('p[class="wea"]')[0].text
-#                     temp = li.select('p[class="tem"] span')[0].text+'/'+li.select('p[class="tem"] i')[0].text
-#                     print(city,date,weather,temp)
-#                     self.db.insert(city,date,weather,temp) # 插入到数据库的记录
-#                 except Exception as err:
-#                     print(err)
-#         except Exception as err:
-#             print(err)
+        url = 'http://www.weather.com.cn/weather/'+self.cityCode[city]+'.shtml'  # 创建成url
+        try:
+            req = urllib.request.Request(url,headers=self.headers) # 访问地址
+            data = urllib.request.urlopen(req)
+            data = data.read()
+            dammit = UnicodeDammit(data,['utf-8'],'gbk')
+            data = dammit.unicode_markup
+            soup = BeautifulSoup(data,'lxml')
+            lis = soup.select("ul[class='t clearfix'] li")  # 找到每一个天气数据
+            for li in lis:
+                try:
+                    date = li.select('h1')[0].text
+                    weather = li.select('p[class="wea"]')[0].text
+                    temp = li.select('p[class="tem"] span')[0].text+'/'+li.select('p[class="tem"] i')[0].text
+                    print(city,date,weather,temp)
+                    self.db.insert(city,date,weather,temp) # 插入到数据库的记录
+                except Exception as err:
+                    print(err)
+        except Exception as err:
+            print(err)
 
-#     def process(self,cities):
-#         self.db = WeatherDB()
-#         self.db.openDB()
-#         for city in cities:
-#             self.forecastCity(city)  # 循环每一个城市
-#         self.db.closeDB()
+    def process(self,cities):
+        self.db = WeatherDB()
+        self.db.openDB()
+        for city in cities:
+            self.forecastCity(city)  # 循环每一个城市
+        self.db.closeDB()
 
-# ws = WeatherForecast()
-# ws.process(['北京','上海','广州','深圳','新竹'])
-# print('completed')
+ws = WeatherForecast()
+ws.process(['北京','上海','广州','深圳','新竹'])
+print('completed')
 
 #获取cookie
 # import http.cookiejar,urllib.request
@@ -256,5 +293,4 @@
 #         parser_content(content)
 
 
-#     create_to_excel('D:\CQU_work_hard\CQU_Holiday_Improvment\code-improve\DSC\hello.xlsx', movieInfo, sheetname="豆瓣电影信息")
-      
+## create_to_excel('D:\CQU_work_hard\CQU_Holiday_Improvment\code-improve\DSC\hello.xlsx', movieInfo, sheetname="豆瓣电影信息")
