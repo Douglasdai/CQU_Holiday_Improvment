@@ -118,6 +118,10 @@ plot.rcParams['font.sans-serif'] = ['SimHei']
 
 #第一天有最低最高气温
 def searchfile2(file):
+    # #负号显示问题
+    plot.rcParams['axes.unicode_minus'] = False
+    # #中文显示问题
+    plot.rcParams['font.sans-serif'] = ['SimHei']
     data_file = open(file,"r",encoding= "utf-8")
     data_content =data_file.readlines()
 #     #定义空列表储存临时数据，将同一组数据存储在同一列表中

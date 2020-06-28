@@ -86,15 +86,69 @@
 # import numpy as np
 import tkinter
 import tkinter.messagebox
+import matplotlib.pyplot as plot 
+import numpy as np
+import urllib
+#异常处理，选择处理
+def searchfile2(file,c):
+    # #负号显示问题
+    plot.rcParams['axes.unicode_minus'] = False
+    # #中文显示问题
+    plot.rcParams['font.sans-serif'] = ['SimHei']
+    data_file = open(file,"r",encoding= "utf-8")
+    data_content =data_file.readlines()
+#     #定义空列表储存临时数据，将同一组数据存储在同一列表中
+    data_temp = []
+    for each in data_content:
+        data_temp.append(each.split())
+
+    data_dict = dict()
+    n=1
+    while n <len(data_temp)-1:
+        data_dict[data_temp[n][0]]=data_temp[n]
+        n+=1
+
+    
+    #异常处理
+    out_form = data_dict[c]
+    print(out_form[0]+' '+out_form[1]+' '+out_form[2]+' 最高气温为：'+out_form[3]+'最低气温为：'+out_form[4])
+    x=[]
+    y1=[]
+    y2=[]
+
+    m=1
+    while m <len(out_form):
+        str1=out_form[m]+out_form[m+1]    
+        x.append(str1)
+        y1.append(int(out_form[m+2]))
+        y2.append(int(out_form[m+3]))
+        m+=4
+    plot.figure(figsize=(12,6))
+    plot.plot(x,y1,'ro-',linewidth = 2)
+    plot.plot(x,y2,'bo-',linewidth = 2)
+    plot.title(out_form[0]+'\n'+\
+        out_form[0]+' '+out_form[1]+' '+out_form[2]+' 最高气温为：'+\
+        out_form[3]+'最低气温为：'+out_form[4],fontsize = 12)
+    plot.xlabel('date',fontsize = 12)
+    plot.ylabel('temp',fontsize= 12)
+    plot.show()
+
+
+#界面(有待优化)
 root = tkinter.Tk()
-
-def helloCallBack():
-    tkinter.messagebox.showinfo('the 结果',"今天晴天")
-
-input_city = tkinter.Entry(root,show="")
-input_city.pack()
-w = tkinter.Label(root,text = "please input your city")
+root.title("天气查询")
+root.geometry('750x500')
+# root.tf.Font(size =40 )
+w = tkinter.Label(root,text = "天气查询",)
 w.pack()
-b = tkinter.Button(root,text = '确认',command = helloCallBack)
+input_city = tkinter.Entry(width= 50)
+input_city.pack()
+def getuser():
+    c = input_city.get()
+    searchfile2("D:\\CQU_work_hard\\CQU_Holiday_Improvment\\code-improve\\DSC\\exz.txt",c)
+# searchfile2("D:\\CQU_work_hard\\CQU_Holiday_Improvment\\code-improve\\DSC\\exz.txt",c)
+b = tkinter.Button(root,text = '确认',command = getuser)
 b.pack()
 root.mainloop()
+
+
